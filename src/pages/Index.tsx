@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Aircraft3D from '@/components/Aircraft3D';
-import AircraftProjections from '@/components/AircraftProjections';
+import TechnicalDrawing from '@/components/TechnicalDrawing';
 import Icon from '@/components/ui/icon';
 
 const Index = () => {
@@ -105,10 +105,15 @@ const Index = () => {
               <div className="mb-6">
                 <h2 className="text-xl font-bold text-foreground mb-2">Technical Projections</h2>
                 <p className="text-sm text-muted-foreground font-mono">
-                  Side • Top • Front orthographic views with measurements
+                  Чертежи по ГОСТ • Скачайте SVG для импорта в T-FLEX
                 </p>
               </div>
-              <AircraftProjections />
+              
+              <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+                <TechnicalDrawing title="ВИД СБОКУ" viewType="side" />
+                <TechnicalDrawing title="ВИД СВЕРХУ" viewType="top" />
+                <TechnicalDrawing title="ВИД СПЕРЕДИ" viewType="front" />
+              </div>
               
               <div className="mt-8 bg-card/50 backdrop-blur-sm p-6 rounded border border-primary/20">
                 <h3 className="text-sm font-mono text-primary mb-4 flex items-center gap-2">

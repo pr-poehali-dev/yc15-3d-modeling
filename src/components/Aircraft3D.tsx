@@ -1,10 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import Icon from '@/components/ui/icon';
 
 const Aircraft3D = () => {
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const lastPos = useRef({ x: 0, y: 0 });
+  const svgRef = useRef<SVGSVGElement>(null);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
@@ -36,6 +39,21 @@ const Aircraft3D = () => {
     }
   }, [isDragging]);
 
+  const downloadSVG = () => {
+    if (!svgRef.current) return;
+    
+    const svgData = new XMLSerializer().serializeToString(svgRef.current);
+    const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'YC-15_isometric_view.svg';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <Card className="relative w-full h-[600px] bg-card/50 backdrop-blur-sm overflow-hidden tech-border">
       <div className="absolute inset-0 grid-pattern opacity-30" />
@@ -52,8 +70,12 @@ const Aircraft3D = () => {
         </div>
       </div>
 
-      <div className="absolute top-4 right-4 z-10 text-xs font-mono text-muted-foreground">
-        <div className="bg-card/80 backdrop-blur-sm px-3 py-2 rounded border border-primary/30">
+      <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
+        <Button onClick={downloadSVG} size="sm" variant="outline" className="text-xs font-mono">
+          <Icon name="Download" size={14} className="mr-2" />
+          SVG
+        </Button>
+        <div className="bg-card/80 backdrop-blur-sm px-3 py-2 rounded border border-primary/30 text-xs font-mono text-muted-foreground">
           YC-15 PROTOTYPE
         </div>
       </div>
@@ -71,7 +93,7 @@ const Aircraft3D = () => {
             transformStyle: 'preserve-3d'
           }}
         >
-          <svg width="500" height="300" viewBox="0 0 500 300" className="drop-shadow-2xl">
+          <svg ref={svgRef} width="500" height="300" viewBox="0 0 500 300" className="drop-shadow-2xl">
             <defs>
               <linearGradient id="fuselageGrad" x1="0%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0%" style={{ stopColor: '#0EA5E9', stopOpacity: 0.8 }} />
