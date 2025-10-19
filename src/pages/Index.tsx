@@ -109,10 +109,14 @@ const Index = () => {
                 </p>
               </div>
               
-              <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+              <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <TechnicalDrawing title="ВИД СБОКУ" viewType="side" />
                 <TechnicalDrawing title="ВИД СВЕРХУ" viewType="top" />
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-6">
                 <TechnicalDrawing title="ВИД СПЕРЕДИ" viewType="front" />
+                <TechnicalDrawing title="РАЗРЕЗ А-А" viewType="section" />
               </div>
               
               <div className="mt-8 bg-card/50 backdrop-blur-sm p-6 rounded border border-primary/20">
